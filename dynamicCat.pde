@@ -1,3 +1,5 @@
+import processing.pdf.*;
+
 PShape[] head = new PShape[10];
 PShape[] headLine = new PShape[10];
 PShape[] headFill = new PShape[10];
@@ -15,19 +17,21 @@ PShape[] eyesFill = new PShape[10];
 PShape[] eyesLine = new PShape[10];
 
 PShape s, t, u, v;
-int canvasWidth = 750;
-int canvasHeight = 750;
-int gridSize = 150;
+int canvasWidth = 1000;
+int canvasHeight = 1000;
+int gridSize = 100;
 int cols = canvasWidth / gridSize;
 int rows = canvasHeight / gridSize;
 int xPos = 0;
 int yPos = 0;
 
+int catColor;
 int randomHead, randomEars, randomNose, randomEyes; 
 
 void setup() {
   frameRate(4);
-  size(canvasWidth, canvasHeight);
+  //size(canvasWidth, canvasHeight);
+  size(canvasWidth, canvasHeight, PDF, "output.pdf");
   int rowCount = 0;
   s = loadShape("head.svg");
   t = loadShape("ears.svg");
@@ -37,8 +41,7 @@ void setup() {
   //randomSeed(0);
   smooth();
   noStroke();
-  fill(255);
-  //fill(0);
+  fill(200);
   rect(0,0,width,height);
   
   // get components
@@ -75,17 +78,20 @@ void setup() {
     randomEars = int(random(ears.length));
     randomNose = int(random(nose.length));
     randomEyes = int(random(eyes.length)); 
-  
+    
+    catColor = int(random(100, 200));
+    
     headLine[randomHead].disableStyle();
     fill(0);
     shape(headLine[randomHead], (i%cols)*gridSize, rowCount, gridSize, gridSize);
     
     headFill[randomHead].disableStyle();
-    fill(255);
+    fill(catColor);
     shape(headFill[randomHead], (i%cols)*gridSize, rowCount, gridSize, gridSize);
     
     earsFill[randomEars].disableStyle();
-    fill(255);
+    fill(catColor);
+    println(catColor);
     
     shape(earsFill[randomEars], (i%cols)*gridSize, rowCount, gridSize, gridSize);
     
@@ -97,8 +103,9 @@ void setup() {
     shape(nose[randomNose], (i%cols)*gridSize, rowCount, gridSize, gridSize);
   }
   
+  //saveFrame("screenshot.png");
 }
 
-void draw() {}
+
 
 
